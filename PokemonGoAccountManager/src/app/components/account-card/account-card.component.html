@@ -1,0 +1,23 @@
+<div class="account-card">
+  <h3 class="card-title">{{ account().userName }}</h3>
+  <div class="details-table">
+    <div class="detail-row">
+      <span class="label">UserName</span>
+      <button type="button" class="copy-btn" (click)="copyUsername()" [class.copied]="isCopied('username')" title="Copy username">
+        {{ isCopied('username') ? '✓ Copied' : 'Copy Button' }}
+      </button>
+    </div>
+    <div class="detail-row">
+      <span class="label">Password</span>
+      <button type="button" class="copy-btn" (click)="copyPassword()" [class.copied]="isCopied('password')" title="Copy password">
+        {{ isCopied('password') ? '✓ Copied' : 'Copy Button' }}
+      </button>
+    </div>
+    <div class="detail-row">
+      <span class="label">Email</span>
+      <button type="button" class="copy-btn" (click)="copyEmail()" [class.copied]="isCopied('email')" title="Copy email">
+        {{ isCopied('email') ? '✓ Copied' : 'Copy Button' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="home-page">
+  <header class="header">
+    <h1>Pokémon GO Accounts</h1>
+  </header>
+
+  @if (loading()) {
+    <div class="loading">Loading...</div>
+  } @else if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+  } @else if (groups().length === 0) {
+    <div class="empty-state">
+      <p>No accounts loaded.</p>
+      <p>Put <strong>Accounts.csv</strong> in the <strong>public</strong> folder (columns: Email, UserName, Password, Category).</p>
+    </div>
+  } @else {
+    <div class="categories">
+      @for (group of groups(); track group.name) {
+        <section class="category">
+          <h2 class="category-title">{{ group.name }}</h2>
+          <div class="cards-grid">
+            @for (row of getCardRows(group.items); track $index) {
+              <div class="card-row">
+                @for (account of row; track account.email + account.userName) {
+                  <app-account-card
+                    [account]="account"
+                    [copiedField]="copiedKey()"
+                    (copy)="onCopy($event)"
+                  />
+                }
+              </div>
+              @if (!$last) {
+                <div class="row-separator" aria-hidden="true"></div>
+              }
+            }
+          </div>
+        </section>
+      }
+    </div>
+  }
+</div>

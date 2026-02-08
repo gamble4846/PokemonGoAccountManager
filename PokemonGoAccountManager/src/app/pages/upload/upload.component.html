@@ -1,0 +1,29 @@
+<div class="upload-page">
+  <header class="header">
+    <h1>Upload CSV</h1>
+    <a routerLink="/" class="btn btn-outline">← Back to Accounts</a>
+  </header>
+
+  <div class="upload-card">
+    <p class="intro">Upload a CSV with columns: <strong>Email</strong>, <strong>UserName</strong>, <strong>Password</strong>, <strong>Category</strong> (or Catagory). The app will download <strong>Accounts.csv</strong> — put it in the <strong>public</strong> folder.</p>
+    <label class="file-label big">
+      Choose CSV file
+      <input type="file" accept=".csv,text/csv" (change)="onFileSelected($event)" class="file-input" />
+    </label>
+
+    @switch (status()) {
+      @case ('upload') {
+        <p class="status">{{ message() }}</p>
+      }
+      @case ('done') {
+        <div class="success">
+          <span class="success-icon">✓</span>
+          {{ message() }}
+        </div>
+      }
+      @case ('error') {
+        <p class="error">{{ message() }}</p>
+      }
+    }
+  </div>
+</div>

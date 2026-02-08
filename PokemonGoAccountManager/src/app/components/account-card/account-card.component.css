@@ -1,0 +1,74 @@
+.account-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition);
+}
+
+.account-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  margin: 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--card-foreground);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.details-table {
+  border-collapse: collapse;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  gap: var(--spacing-md);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.copy-btn {
+  min-height: var(--touch-min);
+  min-width: 100px;
+  padding: 0 var(--spacing-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.copy-btn:hover {
+  background: var(--sidebar-accent);
+}
+
+.copy-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
+}
+
+.copy-btn.copied {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
