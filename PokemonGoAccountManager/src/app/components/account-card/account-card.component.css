@@ -1,24 +1,26 @@
 .account-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .account-card:hover {
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
 .card-title {
   margin: 0;
   padding: var(--spacing-md) var(--spacing-lg);
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 800;
   color: var(--card-foreground);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
   text-align: left;
+  background: linear-gradient(180deg, #f9fafb 0%, var(--card) 100%);
 }
 
 .details-table {
@@ -29,7 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dotted var(--border);
   padding: var(--spacing-sm) var(--spacing-lg);
   gap: var(--spacing-md);
 }
@@ -39,8 +41,8 @@
 }
 
 .label {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.9375rem;
+  font-weight: 700;
   color: var(--muted-foreground);
 }
 
@@ -49,26 +51,34 @@
   min-width: 100px;
   padding: 0 var(--spacing-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 700;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
+  border: 2px solid rgba(0, 0, 0, 0.12);
   background: var(--secondary);
-  color: var(--foreground);
+  color: var(--secondary-foreground);
   cursor: pointer;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 .copy-btn:hover {
-  background: var(--sidebar-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.copy-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .copy-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .copy-btn.copied {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--primary-foreground);
+  background: var(--accent);
+  border-color: #16a34a;
+  color: var(--accent-foreground);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
 }

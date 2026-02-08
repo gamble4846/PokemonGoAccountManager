@@ -13,8 +13,8 @@
 }
 
 .header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 800;
   margin: 0;
   color: var(--foreground);
   letter-spacing: -0.02em;
@@ -22,18 +22,19 @@
 
 .password-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
   padding: var(--spacing-lg);
   max-width: 360px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .password-intro {
   margin: 0 0 var(--spacing-md) 0;
   color: var(--muted-foreground);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.5;
+  font-weight: 600;
 }
 
 .password-form {
@@ -45,16 +46,18 @@
 .password-form .password-input {
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: 1rem;
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--input);
   color: var(--foreground);
   min-height: var(--touch-min);
+  font-weight: 600;
 }
 
 .password-form .password-input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--ring);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .file-label {
@@ -74,20 +77,22 @@
 .empty-state {
   text-align: center;
   padding: var(--spacing-xl);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   color: var(--card-foreground);
   box-shadow: var(--shadow-sm);
+  font-weight: 600;
 }
 
 .error-banner {
   text-align: center;
   padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--radius-md);
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid var(--destructive);
+  background: #fef2f2;
+  border: 2px solid var(--destructive);
   color: var(--destructive);
+  font-weight: 600;
 }
 
 .empty-state p {
@@ -97,11 +102,11 @@
 
 .empty-state a {
   color: var(--primary);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .empty-state a:hover {
-  color: var(--accent);
+  text-decoration: underline;
 }
 
 .categories {
@@ -111,10 +116,10 @@
 }
 
 .category-title {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 800;
   margin: 0 0 var(--spacing-md) 0;
-  color: var(--foreground);
+  color: var(--primary);
   padding-left: var(--spacing-xs);
 }
 
@@ -132,10 +137,11 @@
 }
 
 .row-separator {
-  height: 1px;
-  background: var(--border);
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
   margin: var(--spacing-md) 0;
   width: 100%;
+  border: none;
 }
 
 @media (max-width: 600px) {

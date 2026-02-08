@@ -1,47 +1,47 @@
-/* Design system: dark-modern, sleek, high-contrast, minimalistic, card-based */
+/* White cartoon / kids-style theme – playful, bright, friendly */
 :root {
-  /* Base */
-  --background: #0c0c0f;
-  --foreground: #fafafa;
-  --border: #27272a;
+  /* Base – white and light grey */
+  --background: #f0f0f0;
+  --foreground: #1a1a1a;
+  --border: #ccc;
 
-  /* Semantic */
-  --card: #18181b;
-  --card-foreground: #fafafa;
-  --primary: #6366f1;
+  /* Semantic – bright, kid-friendly colors */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
-  --secondary: #27272a;
-  --secondary-foreground: #fafafa;
-  --accent: #818cf8;
+  --secondary: #fbbf24;
+  --secondary-foreground: #1a1a1a;
+  --accent: #22c55e;
   --accent-foreground: #ffffff;
-  --muted: #71717a;
-  --muted-foreground: #a1a1aa;
-  --destructive: #ef4444;
+  --muted: #6b7280;
+  --muted-foreground: #6b7280;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
 
-  /* Sidebar / nav */
-  --sidebar: #0f0f12;
-  --sidebar-foreground: #a1a1aa;
-  --sidebar-primary: #6366f1;
+  /* Reuse for nav/sidebar if needed */
+  --sidebar: #e5e7eb;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #2563eb;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #27272a;
+  --sidebar-accent: #d1d5db;
 
-  /* Inputs & focus */
-  --input: #18181b;
-  --ring: #6366f1;
+  /* Inputs */
+  --input: #ffffff;
+  --ring: #2563eb;
 
-  /* Radius scale */
-  --radius: 0.5rem;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  /* Bigger, rounder radius – cartoon feel */
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
 
-  /* Shadows - soft, subtle */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  /* Soft, friendly shadows */
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -50,9 +50,8 @@
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
 
-  /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, monospace;
+  /* Playful typography */
+  --font-sans: 'Nunito', 'Comic Sans MS', 'Chalkboard SE', system-ui, sans-serif;
 
   /* Interaction */
   --transition: 180ms ease;
@@ -77,33 +76,40 @@ body {
   color: var(--foreground);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.5;
 }
 
-/* Buttons - design system: primary, secondary, ghost; radius lg */
+/* Chunky, tab-like buttons – cartoon style */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: var(--touch-min);
   padding: var(--spacing-sm) var(--spacing-lg);
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   border-radius: var(--radius-lg);
-  border: none;
+  border: 2px solid rgba(0, 0, 0, 0.15);
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
 }
 
 .btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
-}
-
-.btn:active {
-  transform: scale(0.98);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .btn-primary {
@@ -112,7 +118,7 @@ body {
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.08);
 }
 
 .btn-secondary {
@@ -121,17 +127,18 @@ body {
 }
 
 .btn-secondary:hover {
-  background: #3f3f46;
+  filter: brightness(1.05);
 }
 
 .btn-outline {
-  background: transparent;
-  color: var(--foreground);
-  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 .btn-outline:hover {
-  background: var(--secondary);
+  background: #e0e7ff;
 }
 
 .file-label {
