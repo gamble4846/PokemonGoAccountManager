@@ -1,14 +1,16 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
+import { PasswordService } from '../../services/password.service';
+import { CryptoService } from '../../services/crypto.service';
 import { StorageService } from '../../services/storage.service';
-import { CsvService } from '../../services/csv.service';
 import { CopyService } from '../../services/copy.service';
 import type { Account } from '../../models/account';
 import { AccountCardComponent } from '../../components/account-card/account-card.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AccountCardComponent],
+  imports: [AccountCardComponent, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -16,7 +18,10 @@ export class HomeComponent implements OnInit {
   accounts = signal<Account[]>([]);
   loading = signal(true);
   error = signal('');
-  /** Unique key of the card+field that was just copied (e.g. "email::user@x.com::email"). */
+  /** Show password entry form when no password is stored. */
+  showPasswordForm = signal(false);
+  passwordInput = '';
+  /** Unique key of the card+field that was just copied. */
   copiedKey = signal<string | null>(null);
 
   groups = computed(() => {
@@ -31,27 +36,61 @@ export class HomeComponent implements OnInit {
   });
 
   constructor(
+    private password: PasswordService,
+    private crypto: CryptoService,
     private storage: StorageService,
-    private csv: CsvService,
     private copy: CopyService
   ) {}
 
   ngOnInit(): void {
-    this.loadAccounts();
+    if (this.password.hasPassword()) {
+      this.loadAccounts();
+    } else {
+      this.showPasswordForm.set(true);
+      this.loading.set(false);
+    }
+  }
+
+  async onSubmitPassword(): Promise<void> {
+    const pwd = this.passwordInput.trim();
+    if (!pwd) return;
+    this.password.setPassword(pwd);
+    this.showPasswordForm.set(false);
+    this.passwordInput = '';
+    await this.loadAccounts();
   }
 
   private async loadAccounts(): Promise<void> {
     this.loading.set(true);
     this.error.set('');
-    const csvText = await this.storage.fetchAccountsCsv();
-    if (!csvText || !csvText.trim()) {
+    const pwd = this.password.getPassword();
+    if (!pwd) {
+      this.loading.set(false);
+      return;
+    }
+    let buffer: ArrayBuffer | null = null;
+    const stored = this.storage.getEncryptedData();
+    if (stored) {
+      buffer = this.storage.base64ToBuffer(stored);
+    } else {
+      buffer = await this.storage.fetchEncryptedFromServer();
+    }
+    if (!buffer || buffer.byteLength === 0) {
       this.loading.set(false);
       this.accounts.set([]);
       return;
     }
-    const list = this.csv.parse(csvText);
-    this.accounts.set(list);
-    this.loading.set(false);
+    try {
+      const list = await this.crypto.decrypt(buffer, pwd);
+      this.accounts.set(list);
+    } catch {
+      this.error.set('Wrong password or invalid data.');
+      this.password.clearPassword();
+      this.showPasswordForm.set(true);
+      this.accounts.set([]);
+    } finally {
+      this.loading.set(false);
+    }
   }
 
   onCopy(event: { text: string; field: string; account: Account }): void {

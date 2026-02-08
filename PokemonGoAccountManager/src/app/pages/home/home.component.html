@@ -3,14 +3,29 @@
     <h1>Pokémon GO Accounts</h1>
   </header>
 
-  @if (loading()) {
+  @if (showPasswordForm()) {
+    <div class="password-card">
+      <p class="password-intro">Enter your password to unlock accounts. It will be saved on this device so you don’t have to enter it again.</p>
+      <form (ngSubmit)="onSubmitPassword()" class="password-form">
+        <input
+          type="password"
+          [(ngModel)]="passwordInput"
+          name="password"
+          class="password-input"
+          placeholder="Password"
+          autocomplete="current-password"
+        />
+        <button type="submit" class="btn btn-primary">Unlock</button>
+      </form>
+    </div>
+  } @else if (loading()) {
     <div class="loading">Loading...</div>
   } @else if (error()) {
     <div class="error-banner">{{ error() }}</div>
   } @else if (groups().length === 0) {
     <div class="empty-state">
       <p>No accounts loaded.</p>
-      <p>Put <strong>Accounts.csv</strong> in the <strong>public</strong> folder (columns: Email, UserName, Password, Category).</p>
+      <p>Use the upload page to add a CSV and encrypt it with a password, then enter that password here.</p>
     </div>
   } @else {
     <div class="categories">

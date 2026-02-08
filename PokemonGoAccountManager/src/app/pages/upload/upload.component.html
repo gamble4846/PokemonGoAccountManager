@@ -5,14 +5,23 @@
   </header>
 
   <div class="upload-card">
-    <p class="intro">Upload a CSV with columns: <strong>Email</strong>, <strong>UserName</strong>, <strong>Password</strong>, <strong>Category</strong> (or Catagory). The app will download <strong>Accounts.csv</strong> — put it in the <strong>public</strong> folder.</p>
-    <label class="file-label big">
-      Choose CSV file
-      <input type="file" accept=".csv,text/csv" (change)="onFileSelected($event)" class="file-input" />
-    </label>
+    <p class="intro">Upload a CSV with columns: <strong>Email</strong>, <strong>UserName</strong>, <strong>Password</strong>, <strong>Category</strong> (or Catagory). Enter a password to encrypt the data — you’ll use the same password on the home page to unlock.</p>
+    <form class="upload-form">
+      <label class="field-label">
+        <span>Password (to encrypt)</span>
+        <input type="password" [(ngModel)]="password" name="password" class="password-input" placeholder="Enter password" autocomplete="off" />
+      </label>
+      <label class="file-label big">
+        Choose CSV file
+        <input type="file" accept=".csv,text/csv" (change)="onFileSelected($event)" class="file-input" />
+      </label>
+    </form>
 
     @switch (status()) {
       @case ('upload') {
+        <p class="status">{{ message() }}</p>
+      }
+      @case ('encrypting') {
         <p class="status">{{ message() }}</p>
       }
       @case ('done') {

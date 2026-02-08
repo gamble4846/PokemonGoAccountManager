@@ -1,21 +1,25 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { CsvService } from '../../services/csv.service';
-import { StorageService, ACCOUNTS_CSV_PATH } from '../../services/storage.service';
+import { CryptoService } from '../../services/crypto.service';
+import { StorageService, ENCRYPTED_FILE_NAME } from '../../services/storage.service';
 
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
 })
 export class UploadComponent {
-  status = signal<'idle' | 'upload' | 'done' | 'error'>('idle');
+  password = '';
+  status = signal<'idle' | 'upload' | 'encrypting' | 'done' | 'error'>('idle');
   message = signal('');
 
   constructor(
     private csv: CsvService,
+    private crypto: CryptoService,
     private storage: StorageService
   ) {}
 
@@ -23,6 +27,14 @@ export class UploadComponent {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+
+    const pwd = this.password.trim();
+    if (!pwd) {
+      this.status.set('error');
+      this.message.set('Enter a password to encrypt the data.');
+      input.value = '';
+      return;
+    }
 
     this.status.set('upload');
     this.message.set('Reading CSV...');
@@ -44,23 +56,23 @@ export class UploadComponent {
       return;
     }
 
-    // Rebuild CSV with header for download
-    const header = 'Email,UserName,Password,Category';
-    const rows = accounts.map((a) => `${this.escapeCsv(a.email)},${this.escapeCsv(a.userName)},${this.escapeCsv(a.password)},${this.escapeCsv(a.category)}`);
-    const csvOut = [header, ...rows].join('\r\n');
-    this.downloadCsv(csvOut, ACCOUNTS_CSV_PATH);
-    this.status.set('done');
-    this.message.set(`Saved ${accounts.length} account(s). Put ${ACCOUNTS_CSV_PATH} in your public folder.`);
+    this.status.set('encrypting');
+    this.message.set('Encrypting...');
+    try {
+      const buffer = await this.crypto.encrypt(accounts, pwd);
+      this.storage.setEncryptedData(this.storage.bufferToBase64(buffer));
+      this.downloadBuffer(buffer, ENCRYPTED_FILE_NAME);
+      this.status.set('done');
+      this.message.set(`Encrypted ${accounts.length} account(s). Data saved locally. Use the same password on the home page to unlock.`);
+    } catch {
+      this.status.set('error');
+      this.message.set('Encryption failed.');
+    }
     input.value = '';
   }
 
-  private escapeCsv(val: string): string {
-    if (/[",\r\n]/.test(val)) return `"${val.replace(/"/g, '""')}"`;
-    return val;
-  }
-
-  private downloadCsv(content: string, name: string): void {
-    const blob = new Blob([content], { type: 'text/csv;charset=utf-8' });
+  private downloadBuffer(buffer: ArrayBuffer, name: string): void {
+    const blob = new Blob([buffer], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

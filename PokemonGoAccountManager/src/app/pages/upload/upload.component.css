@@ -35,6 +35,40 @@
   line-height: 1.5;
 }
 
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.field-label span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.password-input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--input);
+  color: var(--foreground);
+  min-height: var(--touch-min);
+}
+
+.password-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
 .file-label.big {
   display: flex;
   align-items: center;
