@@ -72,7 +72,7 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background: var(--background);
+  background: var(--background) url(/background.webp) repeat;
   color: var(--foreground);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -93,13 +93,7 @@ body {
   border: 2px solid rgba(0, 0, 0, 0.15);
   cursor: pointer;
   text-decoration: none;
-  transition: transform var(--transition), box-shadow var(--transition);
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
 }
 
 .btn:active {

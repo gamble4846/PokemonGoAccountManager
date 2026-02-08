@@ -84,7 +84,6 @@
   font-weight: 700;
   color: var(--primary);
   background: #eff6ff;
-  transition: background var(--transition), border-color var(--transition), color var(--transition);
 }
 
 .file-label.big:hover {

@@ -4,12 +4,6 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-
-.account-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
 }
 
 .card-title {
@@ -57,18 +51,8 @@
   background: var(--secondary);
   color: var(--secondary-foreground);
   cursor: pointer;
-  transition: transform var(--transition), box-shadow var(--transition);
+  width: 100%;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-.copy-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
-}
-
-.copy-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .copy-btn:focus-visible {
